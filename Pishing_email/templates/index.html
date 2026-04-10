@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Email Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Phishing Email Detection Model</h1>
+        <p class="subtitle">Enter an email message and predict whether it is phishing or safe.</p>
+
+        <div class="card">
+            <form method="POST">
+                <label for="email_text">Email Text</label>
+                <textarea id="email_text" name="email_text" rows="10" placeholder="Paste email content here...">{{ email_text }}</textarea>
+
+                <div class="button-group">
+                    <button type="submit" name="action" value="predict">Predict Email</button>
+                    <button type="submit" name="action" value="train" class="secondary">Train / Refresh Model</button>
+                </div>
+            </form>
+        </div>
+
+        {% if prediction %}
+        <div class="card result-card">
+            <h2>Prediction Result</h2>
+            <p><strong>Label:</strong>
+                <span class="badge {{ 'phishing' if prediction == 'Phishing' else 'safe' }}">{{ prediction }}</span>
+            </p>
+            <p><strong>Confidence:</strong> {{ "%.2f"|format(probability) }}%</p>
+        </div>
+        {% endif %}
+
+        {% if metrics %}
+        <div class="card">
+            <h2>Model Performance</h2>
+            <p><strong>Logistic Regression Accuracy:</strong> {{ "%.4f"|format(metrics.logistic_regression_accuracy) }}</p>
+            <p><strong>Naive Bayes Accuracy:</strong> {{ "%.4f"|format(metrics.naive_bayes_accuracy) }}</p>
+            <p><strong>Best Model:</strong> {{ metrics.best_model_name }}</p>
+            <p><strong>Confusion Matrix:</strong> {{ metrics.confusion_matrix }}</p>
+            <pre>{{ metrics.classification_report }}</pre>
+            <p>Saved files:</p>
+            <ul>
+                <li>reports/confusion_matrix.png</li>
+                <li>reports/metrics.txt</li>
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

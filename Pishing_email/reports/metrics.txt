@@ -1,0 +1,18 @@
+PHISHING EMAIL DETECTION METRICS
+==================================================
+Logistic Regression Accuracy: 0.9911
+Naive Bayes Accuracy: 0.9324
+Best Model: Logistic Regression
+
+Classification Report:
+              precision    recall  f1-score   support
+
+        safe       0.99      0.99      0.99      3460
+    phishing       0.99      0.99      0.99      4366
+
+    accuracy                           0.99      7826
+   macro avg       0.99      0.99      0.99      7826
+weighted avg       0.99      0.99      0.99      7826
+
+Confusion Matrix:
+[[3421, 39], [31, 4335]]
